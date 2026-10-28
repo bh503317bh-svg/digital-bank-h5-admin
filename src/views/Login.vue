@@ -2,7 +2,7 @@
   <div class="wrap">
     <el-card class="card">
       <h2>aku-bank Admin</h2>
-      <p class="sub">Operations console · USD demo</p>
+      <p class="sub">Operations console · USD</p>
       <el-form @submit.prevent="onSubmit">
         <el-form-item label="Mobile">
           <el-input v-model="mobile" placeholder="13900000001" />
