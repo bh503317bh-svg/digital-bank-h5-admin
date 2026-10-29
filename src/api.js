@@ -23,4 +23,24 @@ export async function listEntries() {
   return data
 }
 
+export async function listFeedback() {
+  const { data } = await http.get('/cm/cases')
+  return data
+}
+
+export async function fetchFeedback(id) {
+  const { data } = await http.get(`/cm/cases/${id}`)
+  return data
+}
+
+export async function replyFeedback(id, body) {
+  const { data } = await http.post(`/cm/cases/${id}/notes`, { body })
+  return data
+}
+
+export async function transitionFeedback(id, status) {
+  const { data } = await http.post(`/cm/cases/${id}/transition`, { status })
+  return data
+}
+
 export default http

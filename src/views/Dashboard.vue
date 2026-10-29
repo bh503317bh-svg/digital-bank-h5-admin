@@ -2,6 +2,10 @@
   <div class="layout">
     <header>
       <div class="brand">aku-bank Admin</div>
+      <nav class="nav">
+        <router-link to="/" class="nav-link active">Dashboard</router-link>
+        <router-link to="/feedback" class="nav-link">User Feedback</router-link>
+      </nav>
       <div class="hdr-right">
         <span class="chip">USD</span>
         <el-button link type="danger" @click="logout">Sign out</el-button>
@@ -150,6 +154,9 @@ header {
   padding: 0 20px;
 }
 .brand { font-weight: 700; letter-spacing: .5px; }
+.nav { display: flex; gap: 16px; flex: 1; }
+.nav-link { color: rgba(255,255,255,.75); text-decoration: none; font-size: 14px; }
+.nav-link.active { color: #fff; font-weight: 700; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
 .chip {
   font-size: 11px; font-weight: 700; letter-spacing: .04em;
