@@ -62,12 +62,12 @@
 
         <div class="sec-h">Status</div>
         <div class="actions">
-          <el-button size="small" @click="doTransition('assigned')">Assign</el-button>
-          <el-button size="small" @click="doTransition('in_progress')">In progress</el-button>
-          <el-button size="small" @click="doTransition('resolved')">Resolved</el-button>
-          <el-button size="small" @click="doTransition('closed')">Close</el-button>
-          <el-button size="small" @click="doTransition('reopened')">Reopen</el-button>
-          <el-button size="small" @click="doTransition('pending_customer')">Info needed</el-button>
+          <el-button size="small" :disabled="!can('assigned')" @click="doTransition('assigned')">Assign</el-button>
+          <el-button size="small" :disabled="!can('in_progress')" @click="doTransition('in_progress')">In progress</el-button>
+          <el-button size="small" :disabled="!can('resolved')" @click="doTransition('resolved')">Resolved</el-button>
+          <el-button size="small" :disabled="!can('closed')" @click="doTransition('closed')">Close</el-button>
+          <el-button size="small" :disabled="!can('reopened')" @click="doTransition('reopened')">Reopen</el-button>
+          <el-button size="small" :disabled="!can('pending_customer')" @click="doTransition('pending_customer')">Info needed</el-button>
         </div>
       </div>
     </el-drawer>
@@ -88,6 +88,20 @@ const current = ref(null)
 const detailLoading = ref(false)
 const reply = ref('')
 const replying = ref(false)
+
+const WORKFLOW = {
+  open: ['assigned', 'closed'],
+  assigned: ['in_progress', 'open'],
+  in_progress: ['pending_customer', 'resolved', 'assigned'],
+  pending_customer: ['in_progress', 'resolved'],
+  resolved: ['closed', 'reopened'],
+  closed: ['reopened'],
+  reopened: ['assigned', 'in_progress']
+}
+
+function can(status) {
+  return !!current.value && (WORKFLOW[current.value.status] || []).includes(status)
+}
 
 const rows = computed(() =>
   (all.value || []).filter((c) => c && String(c.case_type || '').startsWith('FEEDBACK_'))
